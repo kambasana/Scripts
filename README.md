@@ -1,4 +1,5 @@
 
+```
 # Powershell Script to Move Outlook OST to New Location 22-11-22
 # Script modified from James J - Right Size Solutions
 
@@ -48,3 +49,4 @@ write-host "About to change value in registry..." -foregroundcolor RED
 set-ItemProperty -path $key -name $name -value $newBin
 }
 }
+```
