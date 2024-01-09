@@ -1,3 +1,8 @@
+# Kunal Ambasana 1/9/2024
+# Auto sets Git Path in Windows
+# Sets Git Config username to current logged in user
+# Sets Git Config email to current logged in user at example domain
+
 # Define a function to add Git to the PATH
 function Add-GitToPath {
  param (
