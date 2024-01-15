@@ -1,6 +1,21 @@
+# Ask the user for their Azure DevOps PAT
+$pat = Read-Host -Prompt "Please enter your Azure DevOps PAT"
+
+# Set the PAT in an environment variable for the current process
+$env:AZURE_DEVOPS_EXT_PAT = $pat
+
 # Check if AZURE_DEVOPS_EXT_PAT is set
-if (Get-ChildItem env:AZURE_DEVOPS_EXT_PAT) {
+if (Test-Path env:AZURE_DEVOPS_EXT_PAT) {
     "The AZURE_DEVOPS_EXT_PAT environment variable is set."
+    "Attempting to access Azure DevOps..."
+
+    # The following line is a placeholder for the actual code that uses the PAT
+    # to access Azure DevOps services, such as making an API call or running a CLI command
+
 } else {
-    "The AZURE_DEVOPS_EXT_PAT environment variable is not set."
+    "The AZURE_DEVOPS_EXT_PAT environment variable is not set. Please try again."
 }
+
+# Optionally, to make the change permanent (available in future sessions), uncomment the following line:
+# [Environment]::SetEnvironmentVariable('AZURE_DEVOPS_EXT_PAT', $pat, [EnvironmentVariableTarget]::User)
+
