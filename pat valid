@@ -1,0 +1,6 @@
+# Check if AZURE_DEVOPS_EXT_PAT is set
+if (Get-ChildItem env:AZURE_DEVOPS_EXT_PAT) {
+    "The AZURE_DEVOPS_EXT_PAT environment variable is set."
+} else {
+    "The AZURE_DEVOPS_EXT_PAT environment variable is not set."
+}
