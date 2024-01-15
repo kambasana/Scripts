@@ -1,0 +1,5 @@
+# Ask the user for their Azure DevOps PAT
+$pat = Read-Host -Prompt "Please enter your Azure DevOps PAT"
+
+# Set the PAT in an environment variable for the current process
+$env:AZURE_DEVOPS_EXT_PAT = $pat
