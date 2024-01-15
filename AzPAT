@@ -1,0 +1,27 @@
+# Ask the user for their Azure DevOps PAT
+$pat = Read-Host -Prompt "Please enter your Azure DevOps PAT"
+
+# Set the PAT in an environment variable for the current process
+$env:AZURE_DEVOPS_EXT_PAT = $pat
+
+# Attempt to sign in using the PAT
+try {
+    # The organization URL needs to be replaced with your Azure DevOps organization URL
+    $organizationUrl = "https://dev.azure.com/{organization}"
+
+    # Sign in to Azure DevOps CLI using the PAT
+    echo $pat | az devops login --organization $organizationUrl
+
+    # Check if login was successful by listing the Azure DevOps projects
+    $projects = az devops project list --org $organizationUrl | ConvertFrom-Json
+    
+    # If projects are listed, then the login was successful
+    if ($projects.count -gt 0) {
+        Write-Host "PAT is valid and login was successful. You have access to $($projects.count) projects."
+    } else {
+        Write-Host "PAT is valid but you do not have access to any projects."
+    }
+} catch {
+    # If an error occurred during login, the PAT might be invalid or expired
+    Write-Host "Failed to sign in with the provided PAT. Please check if the PAT is correct and has not expired."
+}
