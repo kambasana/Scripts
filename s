@@ -20,13 +20,12 @@ $ie.Navigate($url)
 
 while ($ie.Busy) { Start-Sleep -Milliseconds 100 }
 
-$usernameField = $ie.Document.getElementsByName("j_username") | Select-Object -First 1
-$passwordField = $ie.Document.getElementsByName("j_password") | Select-Object -First 1
+$usernameField = $ie.Document.getElementsByName("username") | Select-Object -First 1
+$passwordField = $ie.Document.getElementsByName("password") | Select-Object -First 1
+$submitButton = $ie.Document.getElementsByTagName("button") | Where-Object { $_.innerText -eq "Submit" }
 
 $usernameField.value = $username
 $passwordField.value = $password
-
-$submitButton = $ie.Document.getElementsByTagName("button") | Where-Object { $_.innerText -eq "Log In" }
 $submitButton.Click()
 
 # Wait for the login process to complete
