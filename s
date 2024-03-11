@@ -1,19 +1,18 @@
-# Define the username and password
-$username = "your_username"
-$password = "your_password"
-
 # Define the URL of the Fieldglass login page
 $url = "https://www.fieldglass.eu/jobs"
 
-# Open a new instance of Chrome and navigate to the login page
-$chromePath = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
-$arguments = "-url `"$url`" --auto-open-devtools-for-tabs --disable-infobars"
-Start-Process -FilePath $chromePath -ArgumentList $arguments
+# Open a new instance of Edge and navigate to the login page
+$edgePath = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+$arguments = "--url `"$url`""
+Start-Process -FilePath $edgePath -ArgumentList $arguments
 
-# Wait for Chrome to finish loading the page
+# Wait for Edge to finish loading the page
 Start-Sleep -Seconds 5
 
 # Send the username and password to the login form
+$username = "your_username"
+$password = "your_password"
+
 $ie = New-Object -ComObject "InternetExplorer.Application"
 $ie.Visible = $false
 $ie.Navigate($url)
@@ -22,10 +21,11 @@ while ($ie.Busy) { Start-Sleep -Milliseconds 100 }
 
 $usernameField = $ie.Document.getElementsByName("username") | Select-Object -First 1
 $passwordField = $ie.Document.getElementsByName("password") | Select-Object -First 1
-$submitButton = $ie.Document.getElementsByTagName("button") | Where-Object { $_.innerText -eq "Submit" }
 
 $usernameField.value = $username
 $passwordField.value = $password
+
+$submitButton = $ie.Document.getElementsByTagName("button") | Where-Object { $_.innerText -eq "Submit" }
 $submitButton.Click()
 
 # Wait for the login process to complete
