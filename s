@@ -10,26 +10,16 @@ Start-Process -FilePath $edgePath -ArgumentList $arguments
 Start-Sleep -Seconds 5
 
 # Send the username and password to the login form
-$username = "your_username"
-$password = "your_password"
+$ie = New-Object -ComObject "WScript.Shell"
 
-$ie = New-Object -ComObject "InternetExplorer.Application"
-$ie.Visible = $false
-$ie.Navigate($url)
+# Wait for the username field to be available
+Start-Sleep -Seconds 5
 
-while ($ie.Busy) { Start-Sleep -Milliseconds 100 }
-
-$usernameField = $ie.Document.getElementsByName("username") | Select-Object -First 1
-$passwordField = $ie.Document.getElementsByName("password") | Select-Object -First 1
-
-$usernameField.value = $username
-$passwordField.value = $password
-
-$submitButton = $ie.Document.getElementsByTagName("button") | Where-Object { $_.innerText -eq "Submit" }
-$submitButton.Click()
+$ie.SendKeys("USERNAME")
+$ie.SendKeys("{TAB}")
+$ie.SendKeys("PASS")
+$ie.SendKeys("{TAB}")
+$ie.SendKeys("{ENTER}")
 
 # Wait for the login process to complete
 Start-Sleep -Seconds 5
-
-# Close the Internet Explorer COM object
-$ie.Quit()
